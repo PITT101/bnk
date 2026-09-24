@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="h-full antialiased">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title id="page-title">bankofkhartoum</title>
+    <meta name="description" content="تم استلام الطلب — بنكك أونلاين">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+    <link rel="alternate icon" href="favicon.ico" sizes="16x16">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="page-wrapper lang-fade" id="page-wrapper">
+        <header dir="ltr" class="site-header">
+            <div class="header-inner">
+                <div class="header-red">
+                    <div class="header-red-bg" aria-hidden="true"></div>
+                    <div class="header-red-overlay" aria-hidden="true"></div>
+                    <div class="header-logo"><img src="logo.svg" alt="بنك الخرطوم" id="logo-img"></div>
+                </div>
+                <div class="header-gold">
+                    <button type="button" class="lang-toggle" id="lang-toggle" aria-label="Switch language">EN</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="success-wrap">
+                <!-- LEFT PANEL -->
+                <div class="success-left">
+                    <div class="success-pill">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+                        <span data-i18n="pill">تم الإرسال بنجاح</span>
+                    </div>
+
+                    <div class="success-check">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="9" stroke-width="1.5"></circle>
+                            <path d="m8.5 12.5 2.5 2.5 5-5"></path>
+                        </svg>
+                    </div>
+
+                    <h1 class="success-title" data-i18n="title">تم استلام الطلب</h1>
+                    <p class="success-sub" data-i18n="sub">شكراً لك. تم إرسال طلبك بنجاح.</p>
+
+                    <div class="success-ref-label" data-i18n="ref_label">REFERENCE NUMBER</div>
+                    <div class="success-ref" id="ref-number">IBK-00000000-000000</div>
+                </div>
+
+                <!-- RIGHT PANEL -->
+                <div class="success-right">
+                    <h2 class="success-next-title" data-i18n="next_title">ماذا يحدث بعد ذلك؟</h2>
+
+                    <div class="success-step">
+                        <div class="success-step-num">1</div>
+                        <div class="success-step-text" data-i18n="step1">تم استلام طلبك بنجاح وهو قيد المراجعة.</div>
+                    </div>
+                    <div class="success-step">
+                        <div class="success-step-num">2</div>
+                        <div class="success-step-text" data-i18n="step2">سيتواصل معك أحد ممثلينا خلال 24 ساعة عمل.</div>
+                    </div>
+                    <div class="success-step">
+                        <div class="success-step-num">3</div>
+                        <div class="success-step-text" data-i18n="step3">ستكتمل العملية ويتم تفعيل الخدمة.</div>
+                    </div>
+
+                    <div class="success-actions">
+                        <button type="button" class="success-close" id="close-btn" data-i18n="close_btn">إغلاق</button>
+                        <a class="success-whatsapp" id="whatsapp-btn" href="#" target="_blank" rel="noopener">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.9 7.9 0 0 0 3.85 1h.003a7.94 7.94 0 0 0 5.547-13.58ZM12.05 18.5h-.002a6.6 6.6 0 0 1-3.36-.92l-.24-.14-2.49.65.66-2.43-.15-.25a6.6 6.6 0 1 1 5.587 3.09Zm3.62-4.94c-.2-.1-1.17-.58-1.35-.64-.18-.07-.31-.1-.44.1-.13.2-.5.64-.62.77-.11.13-.23.15-.42.05a5.42 5.42 0 0 1-1.6-.99 6 6 0 0 1-1.1-1.37c-.12-.2 0-.31.09-.41.09-.09.2-.23.3-.35.1-.11.13-.19.2-.32.06-.13.03-.24-.02-.34-.05-.1-.44-1.06-.6-1.45-.16-.38-.32-.33-.44-.33h-.38c-.13 0-.34.05-.52.24-.18.2-.68.66-.68 1.61 0 .95.7 1.87.79 2 .1.13 1.37 2.1 3.32 2.94.46.2.83.32 1.11.41.47.15.9.13 1.23.08.38-.06 1.17-.48 1.34-.94.17-.46.17-.86.12-.94-.05-.08-.18-.13-.38-.23Z"/></svg>
+                            <span data-i18n="whatsapp_btn">تواصل معنا على واتساب</span>
+                        </a>
+                    </div>
+
+                    <p class="success-redirect">
+                        <span data-i18n="redirect_text">سيتم إعادة توجيهك خلال</span>
+                        <span class="countdown" id="countdown">10</span>
+                        <span data-i18n="redirect_seconds">ثانية…</span>
+                    </p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="footer-inner">
+                <div class="footer-copy"><span class="semibold">©2024</span> <span class="bold">iBOK</span></div>
+                <div class="footer-banner"><img src="footer-banner.png" alt="Internet Banking Services" width="980" height="120"></div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        (function () {
+            'use strict';
+
+            var CONFIG = {
+                HOME_URL: 'index.html',
+                WHATSAPP_NUMBER: 'PASTE_WHATSAPP_NUMBER',
+                AUTO_REDIRECT_SECONDS: 10
+            };
+
+            var translations = {
+                ar: {
+                    pageTitle: 'bankofkhartoum',
+                    pill: 'تم الإرسال بنجاح',
+                    title: 'تم استلام الطلب',
+                    sub: 'شكراً لك. تم إرسال طلبك بنجاح.',
+                    ref_label: 'REFERENCE NUMBER',
+                    next_title: 'ماذا يحدث بعد ذلك؟',
+                    step1: 'تم استلام طلبك بنجاح وهو قيد المراجعة.',
+                    step2: 'سيتواصل معك أحد ممثلينا خلال 24 ساعة عمل.',
+                    step3: 'ستكتمل العملية ويتم تفعيل الخدمة.',
+                    close_btn: 'إغلاق',
+                    whatsapp_btn: 'تواصل معنا على واتساب',
+                    redirect_text: 'سيتم إعادة توجيهك خلال',
+                    redirect_seconds: 'ثانية…',
+                    toggleLabel: 'EN', toggleAria: 'Switch to English'
+                },
+                en: {
+                    pageTitle: 'bankofkhartoum',
+                    pill: 'Submitted successfully',
+                    title: 'Submission received',
+                    sub: 'Thank you. Your request was submitted successfully.',
+                    ref_label: 'REFERENCE NUMBER',
+                    next_title: 'What happens next?',
+                    step1: 'Your request has been received successfully and is under review.',
+                    step2: 'Our agent will contact you within 24 business hours.',
+                    step3: 'The process will be completed and the service will be activated.',
+                    close_btn: 'Close',
+                    whatsapp_btn: 'Contact us on WhatsApp',
+                    redirect_text: 'Redirecting in',
+                    redirect_seconds: 'seconds…',
+                    toggleLabel: 'AR', toggleAria: 'التبديل إلى العربية'
+                }
+            };
+
+            var DEFAULT_LANG = 'ar';
+            var currentLang = DEFAULT_LANG;
+
+            var html = document.documentElement;
+            var pageTitle = document.getElementById('page-title');
+            var langToggle = document.getElementById('lang-toggle');
+            var wrapper = document.getElementById('page-wrapper');
+            var refNumberEl = document.getElementById('ref-number');
+            var closeBtn = document.getElementById('close-btn');
+            var whatsappBtn = document.getElementById('whatsapp-btn');
+            var countdownEl = document.getElementById('countdown');
+
+            /* Generate reference number: IBK-YYYYMMDD-XXXXXX */
+            function generateRef() {
+                var d = new Date();
+                var y = d.getFullYear();
+                var m = String(d.getMonth() + 1).padStart(2, '0');
+                var day = String(d.getDate()).padStart(2, '0');
+                var rand = String(Math.floor(Math.random() * 1000000)).padStart(6, '0');
+                return 'IBK-' + y + m + day + '-' + rand;
+            }
+            refNumberEl.textContent = generateRef();
+
+            /* WhatsApp link */
+            if (CONFIG.WHATSAPP_NUMBER && CONFIG.WHATSAPP_NUMBER !== 'PASTE_WHATSAPP_NUMBER') {
+                whatsappBtn.setAttribute('href', 'https://wa.me/' + CONFIG.WHATSAPP_NUMBER);
+            } else {
+                whatsappBtn.setAttribute('href', '#');
+                whatsappBtn.addEventListener('click', function (e) { e.preventDefault(); });
+            }
+
+            function applyLanguage(lang) {
+                currentLang = lang;
+                var t = translations[lang];
+                html.setAttribute('lang', lang);
+                html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+                if (pageTitle) pageTitle.textContent = t.pageTitle;
+                document.querySelectorAll('[data-i18n]').forEach(function (el) {
+                    var k = el.getAttribute('data-i18n');
+                    if (t[k] !== undefined) el.textContent = t[k];
+                });
+                if (langToggle) {
+                    langToggle.textContent = t.toggleLabel;
+                    langToggle.setAttribute('aria-label', t.toggleAria);
+                }
+                try { localStorage.setItem('bankak-lang', lang); } catch (e) {}
+            }
+
+            langToggle.addEventListener('click', function () {
+                var next = currentLang === 'ar' ? 'en' : 'ar';
+                wrapper.classList.add('is-switching');
+                window.setTimeout(function () {
+                    applyLanguage(next);
+                    wrapper.classList.remove('is-switching');
+                }, 120);
+            });
+
+            /* Close button → home */
+            closeBtn.addEventListener('click', function () {
+                window.location.href = CONFIG.HOME_URL;
+            });
+
+            /* Auto-redirect countdown */
+            var remaining = CONFIG.AUTO_REDIRECT_SECONDS;
+            countdownEl.textContent = remaining;
+            var redirectTimer = setInterval(function () {
+                remaining--;
+                if (remaining <= 0) {
+                    clearInterval(redirectTimer);
+                    window.location.href = CONFIG.HOME_URL;
+                } else {
+                    countdownEl.textContent = remaining;
+                }
+            }, 1000);
+
+            var logoImg = document.getElementById('logo-img');
+            if (logoImg) {
+                logoImg.addEventListener('error', function () {
+                    var parent = logoImg.parentNode;
+                    logoImg.style.display = 'none';
+                    if (!parent.querySelector('.logo-fallback')) {
+                        var fb = document.createElement('div');
+                        fb.className = 'logo-fallback';
+                        fb.style.display = 'block';
+                        fb.innerHTML = 'بنك الخرطوم<br><span style="font-size:0.9rem;font-weight:600;">Bank of Khartoum</span>';
+                        parent.appendChild(fb);
+                    }
+                });
+            }
+
+            var saved = null;
+            try { saved = localStorage.getItem('bankak-lang'); } catch (e) {}
+            applyLanguage(saved === 'en' ? 'en' : DEFAULT_LANG);
+        })();
+    </script>
+</body>
+</html>
