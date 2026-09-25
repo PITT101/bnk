@@ -587,7 +587,7 @@ html[dir="ltr"] .field-label { text-align: left; }
 @media (min-width: 640px) { .service-desc { font-size: 0.88rem; } }
 
 /* ============================================================
-   14. MODAL (index page) — BIGGER & MOBILE-FRIENDLY
+   14. MODAL (index page)
    ============================================================ */
 .modal-overlay {
     position: fixed;
@@ -604,10 +604,9 @@ html[dir="ltr"] .field-label { text-align: left; }
     transition: opacity 0.2s ease;
 }
 .modal-overlay.is-hidden { opacity: 0; pointer-events: none; }
-
 .modal-box {
     width: 100%;
-    max-width: 34rem;
+    max-width: 32rem;
     overflow: hidden;
     border-radius: 1.25rem;
     background-color: #ffffff;
@@ -616,27 +615,19 @@ html[dir="ltr"] .field-label { text-align: left; }
     transition: transform 0.2s ease;
 }
 @media (min-width: 640px) {
-    .modal-box { max-width: 38rem; border-radius: 1.75rem; }
+    .modal-box { max-width: 36rem; border-radius: 1.75rem; }
 }
 .modal-overlay.is-hidden .modal-box { transform: scale(0.95); }
-
-/* ---- HEADER ---- */
 .modal-header {
     position: relative;
     background: linear-gradient(180deg, #ef2029 0%, #C8232C 100%);
-    padding: 1.4rem 1.25rem;
+    padding: 1.1rem 2.5rem;
     text-align: center;
     color: #ffffff;
 }
-@media (min-width: 640px) { .modal-header { padding: 1.75rem 3rem; } }
-
-.modal-title {
-    font-size: 1.35rem;        /* was 1.15rem */
-    font-weight: 900;
-    line-height: 1.3;
-}
-@media (min-width: 640px) { .modal-title { font-size: 2rem; } }
-
+@media (min-width: 640px) { .modal-header { padding: 1.5rem 3rem; } }
+.modal-title { font-size: 1.15rem; font-weight: 900; }
+@media (min-width: 640px) { .modal-title { font-size: 1.875rem; } }
 .modal-close {
     position: absolute;
     top: 50%;
@@ -644,83 +635,45 @@ html[dir="ltr"] .field-label { text-align: left; }
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2.25rem;            /* slightly bigger tap target */
-    height: 2.25rem;
+    width: 2rem;
+    height: 2rem;
     border-radius: 9999px;
     color: #ffffff;
 }
 html[dir="ltr"] .modal-close { right: 0.75rem; }
 html[dir="rtl"] .modal-close { left: 0.75rem; }
 .modal-close:hover { background-color: rgba(255,255,255,0.15); }
-
-/* ---- BODY ---- */
-.modal-body {
-    padding: 1.75rem 1.25rem;  /* was 1.5rem 1rem */
-    text-align: center;
-}
+.modal-body { padding: 1.5rem 1rem; text-align: center; }
 @media (min-width: 640px) { .modal-body { padding: 2.5rem 2.5rem; } }
-
-.modal-text {
-    font-size: 1.15rem;        /* was 0.95rem — much easier on phone */
-    line-height: 1.9;
-    color: #334155;
-    font-weight: 500;          /* slightly heavier for readability */
-}
-@media (min-width: 640px) {
-    .modal-text { font-size: 1.35rem; line-height: 1.9; }
-}
-
-/* Arabic gets slightly larger + more line-height for comfort */
-html[dir="rtl"] .modal-text {
-    font-size: 1.2rem;
-    line-height: 2;
-    letter-spacing: 0;
-}
-@media (min-width: 640px) {
-    html[dir="rtl"] .modal-text { font-size: 1.45rem; line-height: 2; }
-}
-
-/* ---- ACTIONS ---- */
+.modal-text { font-size: 0.95rem; line-height: 1.9; color: #334155; }
+@media (min-width: 640px) { .modal-text { font-size: 1.25rem; line-height: 2; } }
 .modal-actions {
-    margin-top: 1.75rem;
+    margin-top: 1.5rem;
     display: flex;
     flex-direction: column-reverse;
-    gap: 0.75rem;
+    gap: 0.6rem;
 }
 @media (min-width: 640px) {
-    .modal-actions {
-        flex-direction: row;
-        justify-content: center;
-        margin-top: 2rem;
-        gap: 1rem;
-    }
+    .modal-actions { flex-direction: row; justify-content: center; margin-top: 2rem; gap: 0.75rem; }
 }
-
 .modal-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 3.25rem;       /* was 2.75rem — bigger tap target */
-    padding: 0.9rem 1.75rem;
+    min-height: 2.75rem;
+    padding: 0.65rem 1.5rem;
     border-radius: 0.85rem;
-    font-size: 1.1rem;         /* was 0.95rem */
+    font-size: 0.95rem;
     font-weight: 700;
     transition: all 0.15s;
     cursor: pointer;
     border: 1px solid transparent;
 }
 @media (min-width: 640px) {
-    .modal-btn {
-        min-height: 3.25rem;
-        padding: 0.85rem 2rem;
-        border-radius: 1rem;
-        font-size: 1.15rem;
-    }
+    .modal-btn { min-height: 3rem; padding: 0.75rem 1.75rem; border-radius: 1rem; font-size: 1rem; }
 }
-
 .modal-btn-cancel { background-color: #ffffff; border-color: #cbd5e1; color: #334155; }
 .modal-btn-cancel:hover { background-color: #f8fafc; }
-
 .modal-btn-proceed {
     background: linear-gradient(180deg, #ef2029 0%, #C8232C 100%);
     color: #ffffff;
@@ -1741,29 +1694,4 @@ header .relative.flex.bg-\[\#c82228\] img {
 header .flex.flex-1.items-center.justify-end.bg-\[\#d6af17\] {
     padding-top: 0.75rem !important;
     padding-bottom: 0.75rem !important;
-}
-
-/* ============================================================
-   21. MOBILE READABILITY BOOST
-   Makes all site text bigger & more comfortable on phones.
-   ============================================================ */
-@media (max-width: 640px) {
-    html { font-size: 17px; }   /* was 16px default */
-
-    body { line-height: 1.65; }
-
-    /* Body copy on cards */
-    .service-desc { font-size: 0.9rem !important; line-height: 1.65; }
-    .services-sub { font-size: 0.98rem !important; line-height: 1.75; }
-
-    /* Form labels & inputs */
-    .field-label,
-    .form-label { font-size: 0.92rem !important; }
-    .field-input,
-    .form-input { font-size: 1rem !important; min-height: 3rem !important; }
-
-    /* Arabic typography breathing room */
-    html[dir="rtl"] body { line-height: 1.75; }
-    html[dir="rtl"] .service-title,
-    html[dir="rtl"] .services-title { line-height: 1.5; }
 }

