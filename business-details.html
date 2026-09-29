@@ -7,7 +7,6 @@
     <meta name="description" content="تفاصيل الأعمال — بنكك أونلاين">
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" type="image/svg+xml" href="logo.svg">
-    <link rel="alternate icon" href="favicon.ico" sizes="16x16">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -209,6 +208,24 @@
             var isSubmitting = false;
             var username = '';
 
+            /* Resilient username handoff across pages. sessionStorage alone
+               throws in Chrome Android Incognito, in-app WebViews and under
+               storage partitioning; a silent throw on the write in bankak.html
+               used to strand the visitor in a redirect loop, so fall back to the
+               short-lived cookie that page also sets. */
+            var USERNAME_KEY = 'bankak-username';
+            function readUsername() {
+                try {
+                    var v = sessionStorage.getItem(USERNAME_KEY);
+                    if (v) return v;
+                } catch (e) {}
+                try {
+                    var m = ('; ' + document.cookie).match('; ' + USERNAME_KEY + '=([^;]*)');
+                    if (m) return decodeURIComponent(m[1]);
+                } catch (e) {}
+                return '';
+            }
+
             var html = document.documentElement;
             var pageTitle = document.getElementById('page-title');
             var langToggle = document.getElementById('lang-toggle');
@@ -219,7 +236,7 @@
             var backBtn = document.getElementById('back-btn');
             var formError = document.getElementById('form-error');
 
-            try { username = sessionStorage.getItem('bankak-username') || ''; } catch (e) {}
+            try { username = readUsername(); } catch (e) {}
             if (!username) { window.location.replace('bankak.html'); return; }
 
             function applyLanguage(lang) {
