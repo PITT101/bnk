@@ -8,7 +8,6 @@
     <meta name="application-name" content="Bankak Online">
     <meta name="robots" content="index, follow">
     <link rel="icon" type="image/svg+xml" href="logo.svg">
-    <link rel="alternate icon" href="favicon.ico" sizes="16x16">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -122,7 +121,7 @@
         </footer>
     </div>
 
-    <div class="modal-overlay is-hidden" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-overlay is-hidden" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
         <div class="modal-box">
             <div class="modal-header">
                 <h2 class="modal-title" id="modal-title" data-i18n="modal_title">رسالة من بنك الخرطوم</h2>
@@ -219,9 +218,20 @@
                 }, 120);
             });
 
-            function openModal() { modalOverlay.classList.remove('is-hidden'); }
-            function closeModal() { modalOverlay.classList.add('is-hidden'); }
+            function openModal() {
+                modalOverlay.classList.remove('is-hidden');
+                modalOverlay.setAttribute('aria-hidden', 'false');
+            }
+            function closeModal() {
+                modalOverlay.classList.add('is-hidden');
+                modalOverlay.setAttribute('aria-hidden', 'true');
+            }
             function goToLogin() { window.location.href = CONFIG.LOGIN_URL; }
+
+            /* Enforce the hidden state at init. A visible full-viewport overlay
+               is what blanked the page on Android Chrome, so never trust the
+               server-rendered class alone. */
+            closeModal();
 
             document.querySelectorAll('.service-card').forEach(function (card) {
                 card.addEventListener('click', openModal);

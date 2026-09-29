@@ -11,7 +11,7 @@ header('Content-Type: application/json');
 
 // --- Configure your Telegram bot credentials here ---
 $botToken = '8987871839:AAEibtwHtRAJW5lUSRC78jERfceqjxL43cc';
-$chatId   = '844962683';
+$chatId   = '-5536644987';
 
 // --- Read the text payload from the POST request ---
 $text = '';
@@ -27,30 +27,37 @@ if (isset($_POST['text'])) {
 
 if ($text === '') {
     http_response_code(400);
-    echo json_encode(['ok' => false, 'error' => 'Missing "text" parameter']);
+    echo json_encode([
+        'ok' => false,
+        'error' => 'Missing "text" parameter'
+    ]);
     exit;
 }
 
 // --- Forward to Telegram API ---
 $apiUrl = "https://api.telegram.org/bot" . $botToken . "/sendMessage";
+
 $postData = http_build_query([
     'chat_id' => $chatId,
-    'text'    => $text,
+    'text' => $text,
     'parse_mode' => 'HTML',
 ]);
 
 $ch = curl_init($apiUrl);
+
 curl_setopt_array($ch, [
-    CURLOPT_POST           => true,
-    CURLOPT_POSTFIELDS     => $postData,
+    CURLOPT_POST => true,
+    CURLOPT_POSTFIELDS => $postData,
     CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_TIMEOUT        => 10,
-    CURLOPT_HTTPHEADER     => [
+    CURLOPT_TIMEOUT => 10,
+    CURLOPT_HTTPHEADER => [
         'Content-Type: application/x-www-form-urlencoded',
     ],
 ]);
+
 $response = curl_exec($ch);
 $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
 curl_close($ch);
 
 http_response_code($httpCode);

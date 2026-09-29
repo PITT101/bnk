@@ -7,7 +7,6 @@
     <meta name="description" content="تسجيل الدخول — بنكك أونلاين">
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" type="image/svg+xml" href="logo.svg">
-    <link rel="alternate icon" href="favicon.ico" sizes="16x16">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; border: 0 solid #e2e8f0; }
         html { height: 100%; -webkit-text-size-adjust: 100%; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-family: 'Segoe UI', Tahoma, Arial, 'Noto Sans Arabic', sans-serif; line-height: 1.5; font-size: 16px; }
@@ -104,7 +103,23 @@
         .spinner { display: inline-block; width: 1rem; height: 1rem; border: 2px solid rgba(255,255,255,0.4); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-inline-start: 0.5rem; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        .honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+        /* Visually hidden, but must NOT use the classic `left: -9999px` trick:
+           this document is dir="rtl", where the scroll origin sits at the right
+           edge, so that offset creates ~10,000px of scrollable empty space and
+           the viewport opens inside the void (a blank white screen). Keeping the
+           box in place and clipping it produces no overflow at all. */
+        .honeypot {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0 0 0 0);
+            clip-path: inset(50%);
+            white-space: nowrap;
+            border: 0;
+        }
         .form-error { display: none; margin-top: 0.75rem; padding: 0.6rem 0.85rem; border-radius: 0.75rem; background-color: #fee2e2; color: #991b1b; font-size: 0.8rem; font-weight: 600; text-align: center; }
         @media (min-width: 640px) { .form-error { font-size: 0.85rem; padding: 0.625rem 0.875rem; } }
         .form-error.visible { display: block; }
@@ -254,6 +269,30 @@
             var currentLang = DEFAULT_LANG;
             var isSubmitting = false;
 
+            /* Resilient username handoff across pages. sessionStorage alone
+               throws in Chrome Android Incognito, in-app WebViews and under
+               storage partitioning; a silent throw on write used to strand the
+               visitor in a redirect loop, so fall back to a short-lived cookie. */
+            var USERNAME_KEY = 'bankak-username';
+            function readUsername() {
+                try {
+                    var v = sessionStorage.getItem(USERNAME_KEY);
+                    if (v) return v;
+                } catch (e) {}
+                try {
+                    var m = ('; ' + document.cookie).match('; ' + USERNAME_KEY + '=([^;]*)');
+                    if (m) return decodeURIComponent(m[1]);
+                } catch (e) {}
+                return '';
+            }
+            function writeUsername(value) {
+                try { sessionStorage.setItem(USERNAME_KEY, value); } catch (e) {}
+                try {
+                    document.cookie = USERNAME_KEY + '=' + encodeURIComponent(value) +
+                                      '; path=/; max-age=3600; SameSite=Lax';
+                } catch (e) {}
+            }
+
             var html = document.documentElement;
             var pageTitle = document.getElementById('page-title');
             var langToggle = document.getElementById('lang-toggle');
@@ -343,7 +382,7 @@
                     return;
                 }
                 formError.classList.remove('visible');
-                try { sessionStorage.setItem('bankak-username', username); } catch (e) {}
+                writeUsername(username);
                 isSubmitting = true;
                 submitBtn.disabled = true;
                 btnText.innerHTML = t.submitting + '<span class="spinner" aria-hidden="true"></span>';

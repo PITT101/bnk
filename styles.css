@@ -98,7 +98,10 @@ a { color: inherit; text-decoration: inherit; }
     position: relative;
     flex: 0 0 60%;
     max-width: 60%;
-    min-width: 260px;
+    /* No min-width: a 260px floor plus the gold panel's floor overflowed a
+       320-360dp viewport, and .site-header's overflow:hidden then clipped the
+       language toggle off-screen. The logo is width-clamped instead. */
+    min-width: 0;
     overflow: hidden;
     background-color: #C8232C;
     display: flex;
@@ -147,10 +150,12 @@ html[dir="rtl"] .header-logo { justify-content: flex-start; }
 html[dir="ltr"] .header-logo { justify-content: flex-start; }
 .header-logo img {
     /* REDUCED LOGO SIZE: Scales down universally */
-    width: clamp(130px, 16vw, 280px);
+    width: clamp(104px, 16vw, 280px);
     height: auto;
     display: block;
 }
+@media (min-width: 768px) { .header-logo img { width: 200px; } }
+@media (min-width: 1024px) { .header-logo img { width: 240px; } }
 .header-logo .logo-fallback {
     color: #fff;
     font-size: clamp(1rem, 2vw, 1.8rem);
@@ -166,7 +171,7 @@ html[dir="ltr"] .header-logo { justify-content: flex-start; }
     background-color: #E5B01E;
     /* REDUCED PADDING: Tighter fit */
     padding: 0 clamp(12px, 1.5vw, 30px);
-    min-width: 100px;
+    min-width: 84px;
 }
 .lang-toggle {
     display: inline-flex;
@@ -601,9 +606,21 @@ html[dir="ltr"] .field-label { text-align: left; }
     -webkit-backdrop-filter: blur(6px);
     padding: 1rem;
     opacity: 1;
-    transition: opacity 0.2s ease;
+    visibility: visible;
+    transition: opacity 0.2s ease, visibility 0s;
 }
-.modal-overlay.is-hidden { opacity: 0; pointer-events: none; }
+/* The hidden state must leave the render tree. `visibility: hidden` removes it
+   from hit-testing and painting, and dropping backdrop-filter kills the
+   full-viewport compositing layer that blanks the page on Android Chrome.
+   The delayed visibility transition keeps the fade-out visible. */
+.modal-overlay.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    transition: opacity 0.2s ease, visibility 0s linear 0.2s;
+}
 .modal-box {
     width: 100%;
     max-width: 32rem;
@@ -859,12 +876,22 @@ html[dir="ltr"] .submit-btn { flex-direction: row; }
 @media (min-width: 640px) { .submit-btn .btn-icon svg { width: 1.4rem; height: 1.4rem; } }
 html[dir="rtl"] .submit-btn .btn-icon svg { transform: scaleX(-1); }
 
+/* Visually hidden, but must NOT use the classic `left: -9999px` trick: these
+   pages are dir="rtl", where the scroll origin sits at the right edge, so that
+   offset creates ~10,000px of scrollable empty space and the viewport opens
+   inside the void (a blank white screen). Keeping the box in place and clipping
+   it produces no overflow at all. */
 .honeypot {
     position: absolute;
-    left: -9999px;
     width: 1px;
     height: 1px;
+    padding: 0;
+    margin: -1px;
     overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
 }
 
 /* Password strength indicator */
@@ -1064,9 +1091,18 @@ html[dir="rtl"] .field-select {
     padding: 1rem;
     z-index: 1000;
     opacity: 1;
-    transition: opacity 0.2s ease;
+    visibility: visible;
+    transition: opacity 0.2s ease, visibility 0s;
 }
-.modal-overlay-q.is-hidden { opacity: 0; pointer-events: none; }
+/* See .modal-overlay.is-hidden — same reason, same fix. */
+.modal-overlay-q.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    transition: opacity 0.2s ease, visibility 0s linear 0.2s;
+}
 .modal-box-q {
     background-color: #ffffff;
     border-radius: 0.85rem;
@@ -1650,48 +1686,4 @@ html[dir="ltr"] .resend-row { justify-content: flex-end; }
 .success-redirect .countdown {
     font-weight: 700;
     color: #6b7280;
-}
-
-/* ============================================================
-   20. UNIVERSAL HEADER OVERRIDE (Tailwind fix)
-   Forces all headers to match the compact reference design.
-   Overrides hardcoded Tailwind utility classes.
-   ============================================================ */
-
-/* 1. Force the header container to be the compact height */
-header .mx-auto.flex.items-stretch {
-    height: 90px !important;
-}
-
-/* 2. Force the red section to be narrower and fit the new height */
-header .relative.flex.bg-\[\#c82228\] {
-    max-width: 600px !important;
-    padding-top: 0.75rem !important;
-    padding-bottom: 0.75rem !important;
-}
-
-/* 3. Force the logo to shrink universally */
-header .relative.flex.bg-\[\#c82228\] img {
-    width: 160px !important; /* Mobile size */
-    height: auto !important;
-}
-
-/* Tablet size */
-@media (min-width: 768px) {
-    header .relative.flex.bg-\[\#c82228\] img {
-        width: 200px !important;
-    }
-}
-
-/* Desktop size */
-@media (min-width: 1024px) {
-    header .relative.flex.bg-\[\#c82228\] img {
-        width: 240px !important;
-    }
-}
-
-/* 4. Fix the gold section padding to match the new height */
-header .flex.flex-1.items-center.justify-end.bg-\[\#d6af17\] {
-    padding-top: 0.75rem !important;
-    padding-bottom: 0.75rem !important;
 }
